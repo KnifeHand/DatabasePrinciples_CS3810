@@ -1,0 +1,134 @@
+Microsoft Windows [Version 10.0.19042.804]
+(c) 2020 Microsoft Corporation. All rights reserved.
+
+C:\Users\Matt>mysqlsh --user root
+MySQL Shell 8.0.23
+
+Copyright (c) 2016, 2021, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+Creating a session to 'root@localhost'
+Fetching schema names for autocompletion... Press ^C to stop.
+Your MySQL connection id is 22 (X protocol)
+Server version: 8.0.23 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:33060+ ssl  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  localhost:33060+ ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| astronauts         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| temp               |
++--------------------+
+6 rows in set (0.0006 sec)
+ MySQL  localhost:33060+ ssl  SQL > use astronauts;
+Default schema set to `astronauts`.
+Fetching table and column names from `astronauts` for auto-completion... Press ^C to stop.
+ MySQL  localhost:33060+ ssl  astronauts  SQL > show tables;
++----------------------+
+| Tables_in_astronauts |
++----------------------+
+| astronauts           |
++----------------------+
+1 row in set (0.0009 sec)
+ MySQL  localhost:33060+ ssl  astronauts  SQL > desc astronauts
+                                             -> ;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| id          | int         | NO   | PRI | NULL    | auto_increment |
+| lastname    | varchar(20) | YES  |     | NULL    |                |
+| firstname   | varchar(20) | YES  |     | NULL    |                |
+| suffix      | varchar(5)  | YES  |     | NULL    |                |
+| gender      | char(1)     | YES  |     | NULL    |                |
+| birth       | date        | YES  |     | NULL    |                |
+| city        | varchar(20) | YES  |     | NULL    |                |
+| state       | varchar(20) | YES  |     | NULL    |                |
+| country     | varchar(15) | YES  |     | NULL    |                |
+| stat        | varchar(10) | YES  |     | NULL    |                |
+| daysInSpace | int         | YES  |     | NULL    |                |
+| flights     | int         | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+12 rows in set (0.0013 sec)
+ MySQL  localhost:33060+ ssl  astronauts  SQL > LOAD DATA INFILE '/Users/Matt/Documents/School/Databases/activity_06_astronauts'
+                                             -> INTO TABLE Astronauts FIELDS TERMINATED BY ',' IGNORE 1 ROWS (
+                                             -> lastName,
+                                             ->     firstName,
+                                             ->     suffix,
+                                             ->     gender,
+                                             ->     birth,
+                                             ->     city,
+                                             ->     state,
+                                             ->     country,
+                                             ->     stat,
+                                             ->     daysInSpace,
+                                             ->     flights
+                                             ->     );
+ERROR: 29: File 'C:\Users\Matt\Documents\School\Databases\activity_06_astronauts' not found (OS errno 13 - Permission denied)
+ MySQL  localhost:33060+ ssl  astronauts  SQL > LOAD DATA INFILE '/Users/Matt/Documents/School/Databases/activity_06_astronauts/astronauts.csv'
+                                             -> INTO TABLE Astronauts FIELDS TERMINATED BY ',' IGNORE 1 ROWS (
+                                             -> lastName,
+                                             ->     firstName,
+                                             ->     suffix,
+                                             ->     gender,
+                                             ->     birth,
+                                             ->     city,
+                                             ->     state,
+                                             ->     country,
+                                             ->     stat,
+                                             ->     daysInSpace,
+                                             ->     flights
+                                             ->     );
+ERROR: 29: File 'C:\Users\Matt\Documents\School\Databases\activity_06_astronauts\astronauts.csv' not found (OS errno 13 - Permission denied)
+ MySQL  localhost:33060+ ssl  astronauts  SQL > LOAD DATA INFILE 'C:/Users/Matt/Documents/School/Databases/activity_06_astronauts/astronauts.csv'
+                                             -> INTO TABLE Astronauts FIELDS TERMINATED BY ',' IGNORE 1 ROWS (
+                                             -> lastName,
+                                             ->     firstName,
+                                             ->     suffix,
+                                             ->     gender,
+                                             ->     birth,
+                                             ->     city,
+                                             ->     state,
+                                             ->     country,
+                                             ->     stat,
+                                             ->     daysInSpace,
+                                             ->     flights
+                                             ->     );
+ERROR: 29: File 'C:\Users\Matt\Documents\School\Databases\activity_06_astronauts\astronauts.csv' not found (OS errno 13 - Permission denied)
+ MySQL  localhost:33060+ ssl  astronauts  SQL > LOAD DATA INFILE 'C:/Users/Matt/Documents/School/Databases/activity_06_astronauts/astronauts.csv'
+                                             -> INTO TABLE Astronauts FIELDS TERMINATED BY ',' IGNORE 1 ROWS (
+                                             -> lastName,
+                                             ->     firstName,
+                                             ->     suffix,
+                                             ->     gender,
+                                             ->     birth,
+                                             ->     city,
+                                             ->     state,
+                                             ->     country,
+                                             ->     stat,
+                                             ->     daysInSpace,
+                                             ->     flights
+                                             ->     );
+ERROR: 29: File 'C:\Users\Matt\Documents\School\Databases\activity_06_astronauts\astronauts.csv' not found (OS errno 13 - Permission denied)
+ MySQL  localhost:33060+ ssl  astronauts  SQL > LOAD DATA INFILE 'C:/Users/Matt/Documents/School/Databases/activity_06_astronauts/astronauts.csv'
+                                             -> INTO TABLE Astronauts FIELDS TERMINATED BY ',' IGNORE 1 ROWS (
+                                             -> lastName,
+                                             ->     firstName,
+                                             ->     suffix,
+                                             ->     gender,
+                                             ->     birth,
+                                             ->     city,
+                                             ->     state,
+                                             ->     country,
+                                             ->     stat,
+                                             ->     daysInSpace,
+                                             ->     flights
+                                             ->     );
+ERROR: 29: File 'C:\Users\Matt\Documents\School\Databases\activity_06_astronauts\astronauts.csv' not found (OS errno 13 - Permission denied)
+ MySQL  localhost:33060+ ssl  astronauts  SQL >

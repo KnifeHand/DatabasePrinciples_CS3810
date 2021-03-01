@@ -1,0 +1,158 @@
+################MySQL commands####################
+
+**MySQL Setup**
+
+To start the MySQL shell tool in SQL mode use:
+	
+	mysqlsh -u root -p --sql
+	
+	or
+
+	mysplsh --user root
+
+################  ################################
+
+SHOW TABLES; -
++----------------+
+| Tables_in_temp |
++----------------+
+| movies         |
++----------------+
+
+CREATE TABLE <Name of Table>(Attributes); - Creates table and attributes
+
+DROP TABLE <Name of Table>; - Removes the table 
+
+DESC <Name of Table>; - Shows a summary of the table 
++--------+-----------+------+-----+---------+-------+
+| Field  | Type      | Null | Key | Default | Extra |
++--------+-----------+------+-----+---------+-------+
+| title  | char(100) | NO   | PRI | NULL    |       |
+| year   | int       | NO   | PRI | NULL    |       |
+| length | int       | YES  |     | NULL    |       |
+| genre  | char(10)  | YES  |     | NULL    |       |
++--------+-----------+------+-----+---------+-------+
+
+ALTER TABLE <Name of Table> ADD New attribute TYPE(length of attribute); 
+	- Alters table to add to an existing realtion.
+	- Initial value of the attribute is set to NULL.
+
+ALTER TABLE <Name of Table> DROP New attribute TYPE(length of attribute); 
+	-DROP an attribute from an existing relation.
+
+RENAME
+
+TRUNCATE
+
+COMMENT - use "--" to write comments
+
+INSERT INTO tbl_name VALUES(val, val, ..., val); 
+	- Inserts rows into selected table.	
+	- enumerate the values of the row.
+	**Note**: Don't set the values to the auto increment.
+
+> INSERT INTO Employees (name) VALUES ("Matt"), ("James"), ("Rob"), ("Mary");
+Query OK, 4 rows affected (0.0632 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+> SELECT * FROM <Name of Table>;
+	- selects the attribute and displays the results of the table.
+
+> SELECT * FROM employees;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | Matt  |
+|  2 | James |
+|  3 | Rob   |
+|  4 | Mary  |
++----+-------+
+
+> SELECT COUNT(*) FROM Astronauts WHERE country = "USA";
+	- Selects the column and returns the total number of specified attributes .
++----------+
+| count(*) |
++----------+
+|      168 |
++----------+
+1 row in set (0.0007 sec)
+
+> SELECT DISTINCT country FROM Astronauts ORDER BY 1;
+	- DISTINCT will elimnate duplicate entries and display only unique values.
+	- 1;  will alphabatize the order of the entries in the column.
+	- SELECT DISTINCT country FROM Astronauts ORDER BY 1 DESC;  will show the column in decending order
++-------------+
+| country     |
++-------------+
+| Argentina   |
+| Australia   |
+| Brazil      |
+| Canada      |
+| China       |
+| Costa Rica  |
+| England     |
+| India       |
+| Iran        |
+| Ireland     |
+| Italy       |
+| Russia      |
+| Switzerland |
+| USA         |
++-------------+
+14 rows in set (0.0010 sec)
+
+> SELECT lastName, firstName, suffix FROM Astronauts ORDER BY 1, 2;
++--------------------+-------------+--------+
+| lastName           | firstName   | suffix |
++--------------------+-------------+--------+
+| Abrahamson         | James       | NULL   |
+| Acaba              | Joseph      | NULL   |
+| Acton              | Loren       | NULL   |
+| Adams              | Michael     | NULL   |
+---------------------------------------------
+
+> SELECT gender, COUNT(*) FROM Astronauts GROUP BY gender;
+	- Groups by aggregating the results.
+	- SELECT gender, COUNT(*) AS total FROM Astronauts GROUP BY gender;
+		- Will rename the "COUNT(*)" column to "total"
++--------+----------+
+| gender | COUNT(*) |
++--------+----------+
+| M      |      219 |
+| F      |       21 |
++--------+----------+
+2 rows in set (0.0011 sec)
+
+
+LOAD DATA INFILE 'absolute_path/Employees.csv' INTO TABLE Employees FIELDS TERMINATED BY ',' ENCLOSED BY '"' IGNORE 1 ROWS;
+	- Populates the table
+	- Imports large datasets into the table name.
+	- IGNORE: The first row is usually the header of the .csv file.
+
+SELECT * FROM Astronauts;
+	- Shows the contents of the table.
++-----+--------------------+-------------+--------+--------+------------+------------------+----------------------+-------------+---------+-------------+---------+
+| id  | lastname           | firstname   | suffix | gender | birth      | city             | state                | country     | stat    | daysInSpace | flights |
++-----+--------------------+-------------+--------+--------+------------+------------------+----------------------+-------------+---------+-------------+---------+
+|   1 | Abrahamson         | James       | NULL   | M      | 1933-05-19 | Williston        | ND                   | USA         | Retired |           0 |       0 |
+|   2 | Acaba              | Joseph      | NULL   | M      | 1967-05-17 | Inglewood        | CA                   | USA         | Active  |         137 |       2 |
+|   3 | Acton              | Loren       | NULL   | M      | 1936-03-07 | Lewistown        | MT                   | USA         | Retired |           7 |       1 |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+SHOW VARIABLES LIKE 'local_infile%';
+	- % is a wildcard character
+	- ON allows LOAD DATA INFILE to load the table data from .csv file
+	- OFF does not allow LOAD DATA INFILE to load the table data from .csv file
+	**NOTE** - Command from Windows command prompt won't work.  You have to use the Command-Line Client
+		   provided in the MySQL package download to get this to work.
+	** Toggle local infile options for file import.  Needs to be set to on.
+
+		example --->  set global local_infile=on;
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| local_infile  | OFF   |
++---------------+-------+
+1 row in set (0.2770 sec)
+
+
