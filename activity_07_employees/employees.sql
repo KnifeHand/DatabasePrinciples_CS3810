@@ -1,9 +1,19 @@
 -- employees database
--- created at: <date>
--- author: <your name>
+-- created at: <022021>
+-- author: <Matt Hurt>
 
 -- TODO: create database employees
+CREATE TABLE Employees (
+	id INT AUTO_INCREMENT PRIMARY KEY, -- Auto increments each row of id
+    name VARCHAR(30) NOT NULL
+    );
 
+INSERT INTO Employees (name) VALUES 
+	("Matt"), 	-- id 1
+    ("James"), 	-- id 2
+    ("Rob"), 	-- id 3
+    ("Mary"); 	-- id 4
+    
 -- TODO: create table departments
 
 -- TODO: populate table departments
