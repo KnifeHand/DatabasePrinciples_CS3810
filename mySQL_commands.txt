@@ -10,6 +10,9 @@ To start the MySQL shell tool in SQL mode use:
 
 	mysplsh --user root
 
+	or ** for Raspberry Pi**
+	sudo mysql -u root -p
+
 ################  ################################
 
 SHOW TABLES; -
