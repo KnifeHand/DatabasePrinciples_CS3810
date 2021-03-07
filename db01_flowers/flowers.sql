@@ -98,10 +98,9 @@ FROM Deliveries
 ORDER BY 1;
 
 -- f) the exact output (see instructions)
--- FIXME: Common name and format are correct when grouping by 1 but lower temp is the same in both columns
 SELECT common_name, lowerTemp, higherTemp, category 
 FROM FlowerInfo, Zones, Deliveries
-WHERE delvery_id = deliver
+WHERE deliver = delvery_id AND cool_zone = zone_id
 GROUP BY common_name;
 
 
@@ -111,10 +110,9 @@ FROM FlowerInfo
 WHERE hot_zone = '10';
 
 -- h) the total number of plants, the minimum delivery size, the maximum delivery size, and the average size based on the plants that have delivery sizes (note that the average value should be rounded using two decimals).
---FIXME: Count is 10 and should be 6. 
 --SELECT * FROM FlowersInfo INNER JOIN Deliveries ON delSize;
-SELECT COUNT(deliver), MIN(delsize), MAX(delSize), AVG(delSize)
-FROM FlowerInfo, Deliveries WHERE deliver = delvery_id;
+SELECT COUNT(DISTINCT deliver), MIN(delsize), MAX(delSize), ROUND(AVG(delSize),2)
+FROM FlowerInfo, Deliveries WHERE deliver = delvery_id AND delSize IS NOT NULL;
 
 -- i) the Latin name of the plant that has the word ‘Eyed’ in its name (you must use LIKE in this query to get full credit).  
 SELECT common_name'Plant with the word Eyed',latin_name
