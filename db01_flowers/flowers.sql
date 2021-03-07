@@ -10,7 +10,7 @@ USE Flowers;
 DROP TABLE IF EXISTS Flowers;
 
 -- tables creation satisfying all of the requirements
-CREATE TABLE FlowersInfo(
+CREATE TABLE FlowerInfo(
 	flower_id INTEGER PRIMARY KEY,
 	common_name CHAR(30),
 	latin_name CHAR(35),
@@ -21,7 +21,7 @@ CREATE TABLE FlowersInfo(
 	);
 	
 -- FlowersInfo table population
-INSERT INTO FlowersInfo (flower_id, common_name, latin_name, cool_zone, hot_zone, deliver, sun_needs)
+INSERT INTO FlowerInfo (flower_id, common_name, latin_name, cool_zone, hot_zone, deliver, sun_needs)
 VALUES
 	(101, 'Lady Fern', 'Atbyrium filix-femina', '2','9', 5, 'SH'),
 	(102, 'Pink Caladiums', 'C.x borulanum', '10','10', 6,'PtoSH'),
@@ -38,7 +38,7 @@ VALUES
 
 -- tables creation	
 CREATE TABLE Zones(
-	zone_id INTEGER,
+	zone_id INTEGER PRIMARY KEY,
 	lowerTemp iNTEGER,  
 	higherTemp INTEGER
 	);
@@ -75,21 +75,21 @@ VALUES(1, 'pot', 1.500),
 	(9, 'tree', 36.000);
 	
 -- a) the total number of zones.
-SELECT COUNT(zone_id) AS 'Zone Total'
+SELECT COUNT(zone_id)'Zone Total'
 	FROM Zones;
 
 -- b) the number of flowers per cool zone.
 SELECT common_name, cool_zone
-	FROM FlowersInfo WHERE cool_zone < 7;
+	FROM FlowerInfo WHERE cool_zone < 7;
 
 -- c) common names of the plants that have delivery sizes less than 5.
 SELECT common_name, deliver
-FROM FlowersInfo
+FROM FlowerInfo
 WHERE deliver < 5;
 
 -- d) common names of the plants that require full sun (i.e., sun needs contains ‘S’).
 SELECT common_name
-FROM FlowersInfo
+FROM FlowerInfo
 WHERE sun_needs = 'S';
 
 -- e) all delivery category names order alphabetically (without repetition).
@@ -97,23 +97,31 @@ SELECT *
 FROM Deliveries 
 ORDER BY 1;
 
--- FIXME: f) the exact output (see instructions)
+-- f) the exact output (see instructions)
+-- FIXME: Common name and format are correct when grouping by 1 but lower temp is the same in both columns
 SELECT common_name, lowerTemp, higherTemp, category 
-FROM FlowersInfo, Zones, Deliveries
-GROUP BY cool_zone;
+FROM FlowerInfo, Zones, Deliveries
+WHERE delvery_id = deliver
+GROUP BY common_name;
+
 
 -- g) plant names that have the same hot zone as “Pink Caladiums” (your solution MUST get the hot zone of “Pink Caladiums” in a variable).
 SELECT common_name, hot_zone
-FROM FlowersInfo
+FROM FlowerInfo
 WHERE hot_zone = '10';
 
--- h) FIXME: the total number of plants, the minimum delivery size, the maximum delivery size, and the average size based on the plants that have delivery sizes (note that the average value should be rounded using two decimals).
-SELECT AVG(delSize)
-FROM Deliveries;
+-- h) the total number of plants, the minimum delivery size, the maximum delivery size, and the average size based on the plants that have delivery sizes (note that the average value should be rounded using two decimals).
+--FIXME: Count is 10 and should be 6. 
+--SELECT * FROM FlowersInfo INNER JOIN Deliveries ON delSize;
+SELECT COUNT(deliver), MIN(delsize), MAX(delSize), AVG(delSize)
+FROM FlowerInfo, Deliveries WHERE deliver = delvery_id;
 
 -- i) the Latin name of the plant that has the word ‘Eyed’ in its name (you must use LIKE in this query to get full credit).  
-SELECT latin_name
-FROM FlowersInfo
+SELECT common_name'Plant with the word Eyed',latin_name
+FROM FlowerInfo
 WHERE common_name LIKE '%Eyed%';
 
--- j) FIXME: the exact output (see instructions)
+-- j)  the exact output (see instructions)
+SELECT category'Category', common_name'Name'
+FROM FlowerInfo, Deliveries
+WHERE delvery_id = deliver;
