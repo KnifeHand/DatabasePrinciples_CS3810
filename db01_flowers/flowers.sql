@@ -28,7 +28,7 @@ INSERT INTO FlowerInfo(
 	cool_zone, 
 	hot_zone, 
 	deliver, 
-	sun_needs);
+	sun_needs)
 VALUES
 	(101, 'Lady Fern', 'Atbyrium filix-femina', '2','9', 5, 'SH'),
 	(102, 'Pink Caladiums', 'C.x borulanum', '10','10', 6,'PtoSH'),
@@ -84,16 +84,21 @@ VALUES(1, 'pot', 1.500),
 	
 -- a) the total number of zones.
 SELECT COUNT(zone_id)'Total Zones'
-	FROM Zones;
+FROM Zones;
+
 -------------------------------------------------------------------------------
 -- b) the number of flowers per cool zone.
-SELECT common_name'Flowers', cool_zone'Cool Zone'
-	FROM FlowerInfo WHERE cool_zone < 7;
+SELECT common_name 'Flower', cool_zone 'Cool Zone'
+FROM FlowerInfo 
+GROUP BY common_name;
+
 -------------------------------------------------------------------------------
 -- c) common names of the plants that have delivery sizes less than 5.
-SELECT common_name 'Flower', deliver 'Delivery Size'
-FROM FlowerInfo
-WHERE deliver < 5;
+-- FIXME: Null values don't show up in the query.
+SELECT common_name 'Flower' 
+FROM FlowerInfo F INNER JOIN Deliveries D  ON F.deliver = D.delivery_id
+WHERE D.delSize < 5 OR D.delSize IS NULL;
+
 -------------------------------------------------------------------------------
 -- d) common names of the plants that require full sun 
 -- (i.e., sun needs contains ‘S’).
@@ -102,8 +107,9 @@ FROM FlowerInfo
 WHERE sun_needs = 'S';
 -------------------------------------------------------------------------------
 -- e) all delivery category names order alphabetically (without repetition).
-SELECT *
-FROM Deliveries 
+SELECT category
+FROM Deliveries
+GROUP BY category 
 ORDER BY 1;
 -------------------------------------------------------------------------------
 -- f) the exact output (see instructions)
@@ -129,7 +135,8 @@ SELECT COUNT(DISTINCT deliver) 'Total',
 	MIN(delsize)'Min', 
 	MAX(delSize)'Max', 
 	ROUND(AVG(delSize),2) 'Average'
-FROM FlowerInfo, Deliveries WHERE deliver = delivery_id AND delSize IS NOT NULL;
+FROM FlowerInfo, Deliveries 
+WHERE deliver = delivery_id AND delSize IS NOT NULL;
 -------------------------------------------------------------------------------
 -- i) the Latin name of the plant that has the word ‘Eyed’ in its name 
 -- (you must use LIKE in this query to get full credit).  
@@ -140,4 +147,5 @@ WHERE common_name LIKE '%Eyed%';
 -- j)  the exact output (see instructions)
 SELECT category 'Category', common_name 'Name'
 FROM FlowerInfo, Deliveries
-WHERE delivery_id = deliver;
+WHERE delivery_id = deliver
+ORDER BY 1;
