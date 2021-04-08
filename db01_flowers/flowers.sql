@@ -1,6 +1,6 @@
 -- flowers database
 -- created at: <03/01/2021>
--- author(s): <Matt Hurt>
+-- author(s): <Matt Hurt> 
 
 -- database creation and use
 CREATE DATABASE Flowers;
