@@ -1,0 +1,29 @@
+DROP DATABASE IF EXISTS MidTermReview;
+
+CREATE DATABASE MidTermReview;
+
+USE MidTermReview;
+
+CREATE TABLE Advisors
+(
+    adv_id   INT         NOT NULL PRIMARY KEY,
+    adv_name VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE Students
+(
+    std_id   INT         NOT NULL PRIMARY KEY,
+    std_name VARCHAR(30) NOT NULL,
+    adv_id   INT,
+    FOREIGN KEY (adv_id) REFERENCES Advisors (adv_id)
+);
+
+INSERT INTO Advisors(adv_id, adv_name)
+VALUES (1, 'Alen Turing'),
+       (2, 'Ada Lovelace');
+
+INSERT INTO Students(std_id, std_name, adv_id)
+VALUES (1, 'Bill Gates', 1),
+       (2, 'Tim Berners-Lee', 1),
+       (3, 'Linus Torvalds', 2),
+       (4, 'Thyago Mota', NULL);
