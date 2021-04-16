@@ -13,6 +13,7 @@ CREATE TABLE Albums
     artist VARCHAR(30) NOT NULL,
     year   INT         NOT NULL
 );
+
 CREATE TABLE Tracks
 (
     id   INT         NOT NULL,
@@ -22,18 +23,20 @@ CREATE TABLE Tracks
     FOREIGN KEY (id) REFERENCES Albums (id)
 );
 
+SET GLOBAL log_bin_trust_function_creators = 1;
+
 DELIMITER |
 CREATE FUNCTION check_year(year INT) RETURNS INT
 BEGIN
     DECLARE result INT;
     IF year >= 1950 THEN
-        Set result = year;
-    Else
+        SET result = year;
+    ELSE
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Year is invalid!!!';
-    end if;
+    END IF;
     RETURN (result);
-end;
+END;
 |
 DELIMITER ;
 
@@ -70,14 +73,7 @@ VALUES (2, 2, 'Mayhem');
 
 -- Create a procedure called number_albums that shows
 -- the number of albums of a given artist. Call the procedure using:
-CALL number_albums('Sepultura');
 
-# Output should be:
-# +--------+
-# | albums |
-# +--------+
-# |      2 |
-# +--------+
 DELIMITER
 |
 CREATE PROCEDURE number_albums(IN artist VARCHAR(30))
@@ -87,18 +83,19 @@ END;
 |
 DELIMITER ;
 
+CALL number_albums('Sepultura');
+
+# Output should be:
+# +--------+
+# | albums |
+# +--------+
+# |      2 |
+# +--------+
+
 # Create a procedure called albums_number_tracks that shows the
 # year, title and number of tracks of each album of a given artist
 # sorted by year and title. Call the procedure using:
-CALL albums_number_tracks('Sepultura');
 
-# Output should be:
-# +------+----------------+--------+
-# | year | title          | tracks |
-# +------+----------------+--------+
-# | 1986 | Morbid Visions | 2      |
-# | 1996 | Roots          | 3      |
-# +------+----------------+--------+
 DELIMITER |
 CREATE PROCEDURE albums_number_tracks(IN artist VARCHAR(30))
 BEGIN
@@ -110,6 +107,16 @@ BEGIN
 END;
 |
 DELIMITER ;
+
+CALL albums_number_tracks('Sepultura');
+
+# Output should be:
+# +------+----------------+--------+
+# | year | title          | tracks |
+# +------+----------------+--------+
+# | 1986 | Morbid Visions | 2      |
+# | 1996 | Roots          | 3      |
+# +------+----------------+--------+
 
 # Stored Procedures
 # This short tutorial illustrates how to make a stored procedure

@@ -1,6 +1,6 @@
 -- employees database
 -- created at: <date>
--- author: <your name>
+-- author: Matt Hurt
 
 -- TODO: create database employees
 CREATE DATABASE employees;
@@ -58,7 +58,7 @@ VALUES ('Morbid Mojito', 150000, NULL);
 
 -- TODO: a) list all rows in Departments.
 SELECT *
-FROM Department;
+FROM Departments;
 
 -- TODO: b) list only the codes in Departments.
 SELECT code

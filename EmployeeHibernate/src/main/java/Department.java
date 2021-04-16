@@ -23,7 +23,6 @@ public class Department {
         em.getTransaction().commit();
     }
 
-
     public Department() {
 
     }
